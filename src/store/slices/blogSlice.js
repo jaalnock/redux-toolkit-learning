@@ -6,6 +6,7 @@ const initialState = {
     description: "",
   },
   blogList: [],
+  currentEditedBlogId: null,
 };
 
 export const blogSlice = createSlice({
@@ -53,7 +54,7 @@ export const blogSlice = createSlice({
     },
 
     handleDeleteBlog: (state, actions) => {
-      const { currentBlogId } = actions?.payload;
+      const { currentBlogId } = actions.payload;
 
       let cpyBlogList = [...state.blogList];
 
@@ -65,6 +66,27 @@ export const blogSlice = createSlice({
 
       localStorage.setItem("blogList", JSON.stringify(cpyBlogList));
     },
+
+    setCurrentEditedBlogId: (state, actions) => {
+      const { currentBlogId } = actions.payload;
+      state.currentEditedBlogId = currentBlogId;
+    },
+
+    handleEditBlog: (state, actions) => {
+      let cpyBlogList = [...state.blogList];
+
+      const currentBlogIndex = cpyBlogList.findIndex(
+        (singleBlogItem) => singleBlogItem.id === state.currentEditedBlogId
+      );
+
+      cpyBlogList[currentBlogIndex] = {
+        ...cpyBlogList[currentBlogIndex],
+        ...state.formData, // this refers to any changes done in form
+      };
+
+      state.blogList = cpyBlogList;
+      localStorage.setItem("blogList", JSON.stringify(cpyBlogList));
+    },
   },
 });
 
@@ -73,6 +95,8 @@ export const {
   handleAddNewBlog,
   setBlogListOnInitialLoad,
   handleDeleteBlog,
+  setCurrentEditedBlogId,
+  handleEditBlog,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

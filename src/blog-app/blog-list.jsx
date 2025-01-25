@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleDeleteBlog,
+  handleInputChange,
   setBlogListOnInitialLoad,
+  setCurrentEditedBlogId,
 } from "../store/slices/blogSlice";
 
 const BlogList = () => {
   const { blogList } = useSelector((state) => state.blog);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,7 +22,22 @@ const BlogList = () => {
   function onDeleteBlogClick(getBlogId) {
     dispatch(
       handleDeleteBlog({
-        currentBlogId : getBlogId,
+        currentBlogId: getBlogId,
+      })
+    );
+  }
+
+  function onEditBlogClick(getCurrentBlog) {
+    dispatch(
+      setCurrentEditedBlogId({
+        currentBlogId: getCurrentBlog.id,
+      })
+    );
+
+    dispatch(
+      handleInputChange({
+        title: getCurrentBlog?.title,
+        description: getCurrentBlog?.description,
       })
     );
   }
@@ -35,8 +51,16 @@ const BlogList = () => {
             <div key={singleBlogItem?.id} style={styles.blogItem}>
               <h3 style={styles.title}>{singleBlogItem?.title}</h3>
               <h4 style={styles.description}>{singleBlogItem?.description}</h4>
-              <button>Edit Blog</button>
-              <button onClick={() => onDeleteBlogClick(singleBlogItem?.id)}>
+              <button
+                onClick={() => onEditBlogClick(singleBlogItem)}
+                style={styles.editButton}
+              >
+                Edit Blog
+              </button>
+              <button
+                onClick={() => onDeleteBlogClick(singleBlogItem?.id)}
+                style={styles.deleteButton}
+              >
                 Delete Blog
               </button>
             </div>
@@ -99,6 +123,29 @@ const styles = {
     fontWeight: "500",
     color: "#2C3E50", // Dark color for the "No blogs" message
     textAlign: "center",
+  },
+  editButton: {
+    backgroundColor: "#F39C12", // Yellow color for the Edit button
+    color: "#fff",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    transition: "background-color 0.3s",
+    marginRight: "10px",
+    marginTop: "10px",
+  },
+  deleteButton: {
+    backgroundColor: "#E74C3C", // Red color for the Delete button
+    color: "#fff",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    transition: "background-color 0.3s",
+    marginTop: "10px",
   },
 };
 
