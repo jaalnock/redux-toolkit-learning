@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleInputChange } from "../store/slices/blogSlice";
+import { handleAddNewBlog, handleInputChange } from "../store/slices/blogSlice";
 
 const AddNewBlog = () => {
   const { formData } = useSelector((state) => state.blog);
@@ -16,9 +16,14 @@ const AddNewBlog = () => {
     );
   }
 
+  function handleOnSubmit(event) {
+    event.preventDefault();
+    dispatch(handleAddNewBlog());
+  }
+
   return (
     <div style={styles.container}>
-      <form style={styles.form}>
+      <form style={styles.form} onSubmit={handleOnSubmit}>
         <div style={styles.inputGroup}>
           <label style={styles.label}>Blog Title</label>
           <input
@@ -56,7 +61,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100vh",
+    width: "100%",
     background: "linear-gradient(135deg, #FFB6C1, #FFD700)", // Gradient background
   },
   form: {
