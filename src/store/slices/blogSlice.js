@@ -11,7 +11,15 @@ export const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    handleInputChange: () => {},
+    handleInputChange: (state, action) => {
+      let cpyFormData = { ...state.formData };
+      cpyFormData = {
+        ...cpyFormData,
+        ...action.payload,
+      };
+
+      state.formData = cpyFormData;
+    },
   },
 });
 

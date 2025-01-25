@@ -1,6 +1,21 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleInputChange } from "../store/slices/blogSlice";
 
 const AddNewBlog = () => {
+  const { formData } = useSelector((state) => state.blog);
+
+  const dispatch = useDispatch();
+
+  function onChangeInput(event) {
+    dispatch(
+      handleInputChange({
+        // name can be title or description based on what we are changing
+        [event.target.name]: event.target.value,
+      })
+    );
+  }
+
   return (
     <div style={styles.container}>
       <form style={styles.form}>
@@ -11,7 +26,9 @@ const AddNewBlog = () => {
             name="title"
             placeholder="Enter Blog Title"
             id="title"
+            value={formData?.title}
             style={styles.input}
+            onChange={onChangeInput}
           />
         </div>
         <div style={styles.inputGroup}>
@@ -21,7 +38,9 @@ const AddNewBlog = () => {
             name="description"
             placeholder="Enter Blog Description"
             id="description"
+            value={formData?.description}
             style={styles.input}
+            onChange={onChangeInput}
           />
         </div>
         <button type="submit" style={styles.button}>
