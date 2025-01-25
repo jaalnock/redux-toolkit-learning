@@ -10,7 +10,17 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     // all logic , methods here
-    handleIncreaseCountAction: () => {},
+
+    //   (property) handleIncreaseCountAction: (state: WritableDraft<{
+    //     countValue: number;
+    // }>, action: {
+    //     payload: any;
+    //     type: string;
+    // }) => void
+    // this also has access to all the states like countValue here
+    handleIncreaseCountAction: (state, action) => {
+      state.countValue += 1;
+    },
   },
 });
 
