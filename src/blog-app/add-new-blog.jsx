@@ -95,7 +95,7 @@ const styles = {
     padding: "12px",
     fontSize: "18px",
     fontWeight: "600",
-    backgroundColor: "#007BFF",
+    backgroundColor: "#e68a12",
     color: "#fff",
     border: "none",
     borderRadius: "6px",
@@ -104,7 +104,7 @@ const styles = {
   },
   // Adding hover effect in the styles object
   buttonHover: {
-    backgroundColor: "#0056b3", // Darken the blue on hover
+    backgroundColor: "#ed7d05",
   },
 };
 

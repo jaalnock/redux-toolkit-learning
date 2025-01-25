@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setBlogListOnInitialLoad } from "../store/slices/blogSlice";
+import {
+  handleDeleteBlog,
+  setBlogListOnInitialLoad,
+} from "../store/slices/blogSlice";
 
 const BlogList = () => {
   const { blogList } = useSelector((state) => state.blog);
@@ -15,6 +18,14 @@ const BlogList = () => {
     );
   }, []);
 
+  function onDeleteBlogClick(getBlogId) {
+    dispatch(
+      handleDeleteBlog({
+        currentBlogId : getBlogId,
+      })
+    );
+  }
+
   return (
     <div style={styles.container}>
       <h2 style={styles.heading}>Blogs</h2>
@@ -24,6 +35,10 @@ const BlogList = () => {
             <div key={singleBlogItem?.id} style={styles.blogItem}>
               <h3 style={styles.title}>{singleBlogItem?.title}</h3>
               <h4 style={styles.description}>{singleBlogItem?.description}</h4>
+              <button>Edit Blog</button>
+              <button onClick={() => onDeleteBlogClick(singleBlogItem?.id)}>
+                Delete Blog
+              </button>
             </div>
           ))}
         </div>

@@ -51,10 +51,28 @@ export const blogSlice = createSlice({
       // in the payload, we are passing localStorage blogList
       state.blogList = actions.payload.blogList;
     },
+
+    handleDeleteBlog: (state, actions) => {
+      const { currentBlogId } = actions?.payload;
+
+      let cpyBlogList = [...state.blogList];
+
+      cpyBlogList = cpyBlogList.filter(
+        (singleBlogItem) => singleBlogItem.id !== currentBlogId
+      );
+
+      state.blogList = cpyBlogList;
+
+      localStorage.setItem("blogList", JSON.stringify(cpyBlogList));
+    },
   },
 });
 
-export const { handleInputChange, handleAddNewBlog, setBlogListOnInitialLoad } =
-  blogSlice.actions;
+export const {
+  handleInputChange,
+  handleAddNewBlog,
+  setBlogListOnInitialLoad,
+  handleDeleteBlog,
+} = blogSlice.actions;
 
 export default blogSlice.reducer;
