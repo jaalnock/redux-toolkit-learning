@@ -1,10 +1,12 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
+import { Provider } from "react-redux";
+import store from "./store/index.js";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  // connecting react to redux toolkit and pass store for global access
+  <Provider store={store}>
     <App />
-  </BrowserRouter>
+  </Provider>
 );
