@@ -42,10 +42,19 @@ export const blogSlice = createSlice({
         title: "",
         description: "",
       };
+
+      //Saving in localStorage so that data won't lost on refresh
+      localStorage.setItem("blogList", JSON.stringify(state.blogList));
+    },
+
+    setBlogListOnInitialLoad: (state, actions) => {
+      // in the payload, we are passing localStorage blogList
+      state.blogList = actions.payload.blogList;
     },
   },
 });
 
-export const { handleInputChange, handleAddNewBlog } = blogSlice.actions;
+export const { handleInputChange, handleAddNewBlog, setBlogListOnInitialLoad } =
+  blogSlice.actions;
 
 export default blogSlice.reducer;

@@ -1,8 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setBlogListOnInitialLoad } from "../store/slices/blogSlice";
 
 const BlogList = () => {
   const { blogList } = useSelector((state) => state.blog);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      setBlogListOnInitialLoad({
+        blogList: JSON.parse(localStorage.getItem("blogList")) || [],
+      })
+    );
+  }, []);
 
   return (
     <div style={styles.container}>
